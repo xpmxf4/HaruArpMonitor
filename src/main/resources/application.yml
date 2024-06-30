@@ -5,6 +5,7 @@ spring:
 
 github:
   token: ${DONGHEE_MONITOR_GITHUB_TOKEN}
+  commit-url: https://api.github.com/repos/xpmxf4/jjapterpark-frontend/commits
 
 slack:
   signing-secret: ${SLACK_SIGNING_SECRET}

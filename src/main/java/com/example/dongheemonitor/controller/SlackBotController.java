@@ -30,8 +30,8 @@ public class SlackBotController {
     }
 
     @GetMapping("/test1")
-    public ResponseEntity<String> githubTest() {
-        return gitHubService.getCommitAuthors("xpmxf4/jjapterpark-frontent", LocalDateTime.now());
+    public Boolean githubTest() {
+        return gitHubService.checkDailyCommits();
     }
 
     @GetMapping("/test2")

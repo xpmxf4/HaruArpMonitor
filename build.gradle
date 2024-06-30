@@ -29,6 +29,9 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     // slack-api-client
     implementation 'com.slack.api:slack-api-client:1.40.1'
+    // org.json
+    implementation 'org.json:json:20240303'
+
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

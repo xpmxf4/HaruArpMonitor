@@ -1,72 +1,57 @@
 package com.example.dongheemonitor.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.*;
-import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
 public class GitHubService {
 
-    @Value("${github.token}")
-    private String githubToken;
+    @Value("${github.commit-url}")
+    private String commitUrl;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public ResponseEntity<String> getCommitAuthors(String repo, LocalDateTime since) {
-        String url = String.format("https://api.github.com/repos/%s/commits?since=%s", repo, since.toString());
-        return restTemplate.getForEntity(url, String.class);
-    }
+    public Boolean checkDailyCommits() {
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        ResponseEntity<String> response = restTemplate.getForEntity(commitUrl, String.class);
 
-    static class Commit {
-        private CommitDetails commit;
+        try {
+            JSONArray commits = new JSONArray(response.getBody());
+            log.info("Commits array size : " + commits.length());
 
-        public CommitDetails getCommit() {
-            return commit;
-        }
+            Map<String, Boolean> commitStatus = new HashMap<>();
+            commitStatus.put("Haru-Lee", false);
+            commitStatus.put("Haru-arp", false);
 
-        public void setCommit(CommitDetails commit) {
-            this.commit = commit;
-        }
-    }
+            for (int i = 0; i < commits.length(); i++) {
+                JSONObject commit = commits.getJSONObject(i);
+                JSONObject commitDetails = commit.getJSONObject("commit").getJSONObject("author");
+                String authorName = commitDetails.getString("name");
+                String commitDate = commitDetails.getString("date");
 
-    static class CommitDetails {
-        private CommitAuthor author;
+                log.info("name : " + authorName + " , date : " + commitDate);
+                LocalDate commitLocalDate = LocalDate.parse(commitDate, DateTimeFormatter.ISO_DATE_TIME);
+                if (commitLocalDate.isEqual(yesterday)) {
+                    commitStatus.computeIfPresent(authorName, (key, value) -> true);
+                }
+            }
+            log.info("Haru-Lee committed today: {}", commitStatus.get("Haru-Lee"));
+            log.info("Haru-arp committed today: {}", commitStatus.get("Haru-arp"));
 
-        public CommitAuthor getAuthor() {
-            return author;
-        }
-
-        public void setAuthor(CommitAuthor author) {
-            this.author = author;
-        }
-    }
-
-    static class CommitAuthor {
-        private String name;
-        private String date;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
+            return commitStatus.containsValue(true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
