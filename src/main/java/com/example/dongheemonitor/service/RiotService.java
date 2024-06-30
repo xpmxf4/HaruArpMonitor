@@ -16,14 +16,14 @@ public class RiotService {
     @Value("${riot.api-key}")
     private String riotApiKey;
 
-    @Value("${riot.haru-puuid}")
-    private String haruPuuid;
+    @Value("${riot.donghee-puuid}")
+    private String dongheePuuid;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final GameCommitAlertRepository gameCommitAlertRepository;
 
     public boolean isDongHeePlaying() {
-        String url = String.format("https://api.riotgames.com/lol/spectator/v4/active-games/by-summoner/%s?api_key=%s", haruPuuid, riotApiKey);
+        String url = String.format("https://api.riotgames.com/lol/spectator/v4/active-games/by-summoner/%s?api_key=%s", dongheePuuid, riotApiKey);
         try {
             String result = restTemplate.getForObject(url, String.class);
             // 게임 중인 상태 기록 저장

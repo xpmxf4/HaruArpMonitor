@@ -14,4 +14,4 @@ slack:
 
 riot:
   api-key: ${RIOT_API_KEY}
-  haru-puuid: aOCeMo0I2IkAXt19RhWEo_eoy6rP6CjUlhHWsRtzm0X2eJgCEqLBXWgQxQlWOxrlFlSyncmvaeiOkA
+  donghee-puuid: aOCeMo0I2IkAXt19RhWEo_eoy6rP6CjUlhHWsRtzm0X2eJgCEqLBXWgQxQlWOxrlFlSyncmvaeiOkA
