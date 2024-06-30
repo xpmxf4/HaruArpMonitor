@@ -19,7 +19,6 @@ public class SlackService {
 
     @Value("${slack.bot-token}")
     private String botToken;
-
     private final ApiCallRecordRepository apiCallRecordRepository;
     private final Slack slack = Slack.getInstance();
 
