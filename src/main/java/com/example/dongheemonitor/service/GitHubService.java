@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.objenesis.SpringObjenesis;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -24,8 +25,13 @@ public class GitHubService {
 
     @Value("${github.commit-url}")
     private String commitUrl;
-    private final DailyCommitRecordRepository dailyCommitRecordRepository;
+
+    @Value("${slack.donghee-id}")
+    private String dongheeId;
+
     private final RestTemplate restTemplate = new RestTemplate();
+    private final DailyCommitRecordRepository dailyCommitRecordRepository;
+    private final SlackService slackService;
 
     @Scheduled(cron = "0 0 0 * * *")
     public Boolean checkDailyCommits() {
@@ -66,6 +72,10 @@ public class GitHubService {
                             .commited(commitHappened)
                             .build()
             );
+
+            if (!commitHappened) {
+                slackService.sendMessage("#일반", "<@%s> 동희님은 오늘 하나도 작업을 하지시 않았습니다 하,,,".formatted(dongheeId));
+            }
 
             return commitHappened;
         } catch (Exception e) {
