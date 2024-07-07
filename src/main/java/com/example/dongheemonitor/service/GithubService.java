@@ -20,7 +20,7 @@ import java.util.List;
 public class GithubService {
 
     private final GithubApiConfig githubApiConfig;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<GithubCommit> getCommits() throws IOException {
