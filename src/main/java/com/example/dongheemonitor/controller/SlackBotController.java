@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/alarm")
 @RequiredArgsConstructor
+@RequestMapping("/alarm")
 public class SlackBotController {
 
     private final SlackService slackService;
-    private final GitHubService gitHubService;
     private final RiotService riotService;
 
-    @GetMapping("/slack")
+    @GetMapping("/fromPeople")
     public String sendAlert() {
         try {
             slackService.sendMessage("#봇테스트", "<@U063VSQ1F4P> 일 해라 노예야.");
@@ -24,11 +23,6 @@ public class SlackBotController {
             log.error(e.getMessage());
             return "API 호출에 문제가 있습니다 ㅠ";
         }
-    }
-
-    @GetMapping("/test1")
-    public Boolean githubTest() {
-        return gitHubService.checkDailyCommits();
     }
 
     @GetMapping("/test2")

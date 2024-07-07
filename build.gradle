@@ -32,9 +32,9 @@ dependencies {
     // org.json
     implementation 'org.json:json:20240303'
 
-
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     runtimeOnly 'com.h2database:h2'
 

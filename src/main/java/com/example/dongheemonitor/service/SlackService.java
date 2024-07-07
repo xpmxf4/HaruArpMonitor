@@ -4,7 +4,6 @@ import com.example.dongheemonitor.entity.*;
 import com.example.dongheemonitor.repository.*;
 import com.slack.api.*;
 import com.slack.api.methods.*;
-import com.slack.api.methods.request.chat.*;
 import com.slack.api.methods.response.chat.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +18,7 @@ public class SlackService {
 
     @Value("${slack.bot-token}")
     private String botToken;
-    private final ApiCallRecordRepository apiCallRecordRepository;
+    private final ApiCallHistoryRepository apiCallHistoryRepository;
     private final Slack slack = Slack.getInstance();
 
     public void sendMessage(String channel, String text) throws IOException, SlackApiException {
@@ -32,7 +31,7 @@ public class SlackService {
         }
 
         // API 호출 기록 저장
-        ApiCallRecord record = new ApiCallRecord("sendMessage", LocalDateTime.now());
-        apiCallRecordRepository.save(record);
+        ApiCallHistory record = new ApiCallHistory("sendMessage", LocalDateTime.now());
+        apiCallHistoryRepository.save(record);
     }
 }

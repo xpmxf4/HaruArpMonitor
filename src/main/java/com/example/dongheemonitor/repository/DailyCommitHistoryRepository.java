@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.*;
 import org.springframework.stereotype.*;
 
 @Repository
-public interface DailyCommitRecordRepository extends MongoRepository<DailyCommitRecord, String> {
+public interface DailyCommitHistoryRepository extends MongoRepository<DailyCommitHistory, String> {
 }

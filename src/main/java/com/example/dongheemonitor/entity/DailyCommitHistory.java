@@ -8,7 +8,7 @@ import java.time.*;
 
 @Getter
 @Document(collection = "daily_commit_records")
-public class DailyCommitRecord {
+public class DailyCommitHistory {
 
     @Id
     private String id;
@@ -17,7 +17,7 @@ public class DailyCommitRecord {
     private boolean commited;
 
     @Builder
-    public DailyCommitRecord(String author, LocalDateTime timestamp, boolean commited) {
+    public DailyCommitHistory(String author, LocalDateTime timestamp, boolean commited) {
         this.author = author;
         this.timestamp = timestamp;
         this.commited = commited;

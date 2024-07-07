@@ -8,7 +8,7 @@ import java.time.*;
 
 @Getter
 @Document(collection = "game_commit_alerts")
-public class GameCommitAlert {
+public class LolPlayingAlertHistory {
 
     @Id
     private String id;
@@ -17,7 +17,7 @@ public class GameCommitAlert {
     private LocalDateTime timestamp;
     private boolean alerted;
 
-    public GameCommitAlert(String summonnerName, LocalDateTime timestamp, boolean alerted) {
+    public LolPlayingAlertHistory(String summonnerName, LocalDateTime timestamp, boolean alerted) {
         this.summonnerName = summonnerName;
         this.timestamp = timestamp;
         this.alerted = alerted;

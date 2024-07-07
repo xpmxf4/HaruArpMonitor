@@ -8,7 +8,7 @@ import java.time.*;
 
 @Getter
 @Document(collection = "api_call_records_by_people")
-public class ApiCallRecord {
+public class ApiCallHistory {
 
     @Id
     private String id;
@@ -16,7 +16,7 @@ public class ApiCallRecord {
     private String endpoint;
     private LocalDateTime timestamp;
 
-    public ApiCallRecord(String endpoint, LocalDateTime timestamp) {
+    public ApiCallHistory(String endpoint, LocalDateTime timestamp) {
         this.endpoint = endpoint;
         this.timestamp = timestamp;
     }
